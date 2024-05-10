@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Danh sách sản phẩm</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div style="text-align: center;">
+<div class="col-md-4">
+    <h4 class="text-success">Giỏ hàng</h4>
+    <table class="table table-striped" th:each="oder: ${oderList}">
+        <thead>
+        <tr>
+            <th>STT</th>
+            <th>Tên sản phẩm</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Trạng thái</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="oderProduct: ${oder.getOderProducts()}">
+            <td th:text="${oderProduct.getProduct().getCode()}"></td>
+            <td th:text="${oderProduct.getProduct().getName()}"></td>
+            <td th:text="${oderProduct.getProduct().getPrice()}"></td>
+            <td th:text="1"></td>
+            <td>Đang giao hàng.</td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

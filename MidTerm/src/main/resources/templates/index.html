@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Danh sách sản phẩm</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</head>
+<body style="background-color: #f8f8f8">
+<div style="text-align: center;">
+<div class="container-fluid p-5">
+    <div class="row mb-5">
+        <div class="col-md-6">
+            <h3>Product Management</h3>
+        </div>
+        <div class="col-md-6 text-right">
+            Xin chào <span class="text-danger"><a th:href="@{'/detail'}" th:text="${loginUser.getUsername()}"></a></span> | <a href="/login">Logout</a>
+        </div>
+        <div class="form-group">
+            <form method="post"  action="/find">
+                <label for="find">Tìm kiếm</label>
+                <input id="find" type="find" class="form-control" placeholder="Tên sản phẩm" name="namefind">
+                <div class="form-group">
+                    <button class="btn btn-success px-5">Tìm kiếm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+        <div class="col-md-8">
+            <h4 class="text-success">Danh sách sản phẩm</h4>
+            <p>Chọn một sản phẩm cụ thể để xem chi tiết</p>
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá</th>
+                    <th>Hình Ảnh</th>
+                    <th>Mô tả</th>
+                    <th>Thao tác</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="product: ${products}">
+                    <td th:text="${product.getCode()}"></td>
+                    <td><a th:href="@{'/detailphone/'+ ${product.getCode()}}" th:text="${product.getName()}"></a></td>
+                    <td th:text="${product.getPrice()}"></td>
+
+                    <td>
+                        <img th:src="@{'/images/'+ ${product.getImageProduct()}}" alt="..." width="100px">
+                    </td>
+                    <td th:text="${product.getDescription()}"></td>
+                    <td>
+                        <a th:href="@{'/cart/'+ ${product.getCode()}}">Thêm vào giỏ</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="row rounded border p-3">
+        <div class="col-md-4">
+            <h4 class="text-success">Giỏ hàng</h4>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá</th>
+                        <th>Số lượng</th>
+                        <th>Thao tác</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="product: ${productCart}">
+                        <td th:text="${product.getCode()}"></td>
+                        <td th:text="${product.getName()}"></td>
+                        <td th:text="${product.getPrice()}"></td>
+                        <td th:text="1"></td>
+                        <td>
+                            <a th:href="@{'/cart/delete/'+ ${product.getCode()}}">Xóa</a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <div class="form-group">
+                    <a th:href="@{'/dathang/' + ${loginUser.getCode()}}" class="btn btn-primary">Đặt hàng</a>
+                </div>
+        </div>
+    </div>
+</div>
+<script>
+    // Add the following code if you want the name of the file appear on select
+    $(".custom-file-input").on("change", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+    });
+</script>
+</div>
+</body>
+</html>
